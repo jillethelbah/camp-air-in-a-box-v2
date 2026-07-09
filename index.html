@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camp AIR in a Box &mdash; Deliver Camp AIR Your Way</title>
+  <style>
+    /* === Variables — matched to campAIR-WFA === */
+    :root {
+      --color-primary: #0078D4;
+      --color-primary-dark: #005A9E;
+      --color-primary-light: #DEECF9;
+      --color-bg: #FAFAFA;
+      --color-surface: #FFFFFF;
+      --color-surface-alt: #F3F2F1;
+      --color-text: #323130;
+      --color-text-secondary: #605E5C;
+      --color-text-light: #A19F9D;
+      --color-border: #EDEBE9;
+      --color-accent-green: #107C10;
+      --color-accent-green-bg: #DFF6DD;
+      --color-accent-orange: #CA5010;
+      --color-accent-orange-bg: #FFF4CE;
+      --color-accent-purple: #8764B8;
+      --color-accent-purple-bg: #EDE3F6;
+      --color-accent-teal: #008272;
+      --color-accent-teal-bg: #D4EFED;
+      --shadow-card: 0 1.6px 3.6px rgba(0,0,0,0.06), 0 0.3px 0.9px rgba(0,0,0,0.04);
+      --shadow-card-hover: 0 3.2px 7.2px rgba(0,0,0,0.1), 0 0.6px 1.8px rgba(0,0,0,0.06);
+      --shadow-elevated: 0 6.4px 14.4px rgba(0,0,0,0.12), 0 1.2px 3.6px rgba(0,0,0,0.08);
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --font-base: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-base);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    a { color: var(--color-primary); text-decoration: none; }
+    a:hover { color: var(--color-primary-dark); }
+
+    /* === Header === */
+    .header {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: var(--shadow-card);
+    }
+    .header__content {
+      max-width: 1200px; margin: 0 auto;
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header__brand { display: flex; align-items: center; gap: 12px; }
+    .header__logo { font-size: 28px; }
+    .header__title { font-size: 22px; font-weight: 700; color: var(--color-text); }
+    .header__subtitle { font-size: 13px; color: var(--color-text-secondary); border-left: 2px solid var(--color-border); padding-left: 12px; }
+    .header__nav { display: flex; gap: 8px; }
+    .header__nav a {
+      padding: 8px 16px; border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 500; color: var(--color-text-secondary);
+      transition: all 0.2s;
+    }
+    .header__nav a:hover { background: var(--color-primary-light); color: var(--color-primary-dark); }
+    .header__nav a.active { background: var(--color-primary); color: #fff; }
+
+    /* === Hero === */
+    .hero {
+      background: linear-gradient(135deg, #0078D4 0%, #005A9E 50%, #003C71 100%);
+      color: #fff; padding: 64px 32px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 30%, rgba(255,255,255,0.06) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(3deg); }
+    }
+    .hero__inner { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+      padding: 6px 16px; border-radius: 20px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+      margin-bottom: 20px; backdrop-filter: blur(8px);
+    }
+    .hero__title { font-size: 48px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; line-height: 1.1; }
+    .hero__subtitle { font-size: 20px; opacity: 0.9; max-width: 600px; margin: 0 auto 28px; line-height: 1.5; }
+    .hero__cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .hero__cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: var(--radius-md);
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      border: none; transition: all 0.25s;
+    }
+    .hero__cta--primary { background: #fff; color: var(--color-primary-dark); }
+    .hero__cta--primary:hover { background: #e6f0fa; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); color: var(--color-primary-dark); }
+    .hero__cta--secondary { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+    .hero__cta--secondary:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); color: #fff; }
+
+    /* === Main Content === */
+    .main { max-width: 1200px; margin: 0 auto; padding: 48px 32px; }
+
+    /* === Section Headers === */
+    .section-header { text-align: center; margin-bottom: 40px; }
+    .section-header__label {
+      display: inline-block; font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--color-primary); margin-bottom: 8px;
+    }
+    .section-header__title { font-size: 32px; font-weight: 700; color: var(--color-text); margin-bottom: 8px; }
+    .section-header__desc { font-size: 16px; color: var(--color-text-secondary); max-width: 640px; margin: 0 auto; }
+
+    /* === Delivery Model Cards === */
+    .models-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-bottom: 56px;
+    }
+    @media (max-width: 900px) { .models-grid { grid-template-columns: 1fr; } }
+
+    .model-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden; cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .model-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-elevated);
+      border-color: var(--color-primary);
+    }
+    .model-card__accent {
+      height: 6px; width: 100%;
+    }
+    .model-card--team .model-card__accent { background: linear-gradient(90deg, #107C10, #3CB043); }
+    .model-card--org .model-card__accent { background: linear-gradient(90deg, #0078D4, #2B88D8); }
+    .model-card--scale .model-card__accent { background: linear-gradient(90deg, var(--color-accent-teal), #22B8A7); }
+
+    .model-card__body { padding: 28px 24px; }
+    .model-card__icon {
+      width: 56px; height: 56px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin-bottom: 16px;
+    }
+    .model-card--team .model-card__icon { background: var(--color-accent-green-bg); }
+    .model-card--org .model-card__icon { background: var(--color-primary-light); }
+    .model-card--scale .model-card__icon { background: var(--color-accent-teal-bg); }
+
+    .model-card__title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .model-card__audience {
+      display: inline-block; font-size: 12px; font-weight: 600;
+      color: var(--color-text-secondary); background: var(--color-surface-alt);
+      padding: 3px 10px; border-radius: 12px; margin-bottom: 12px;
+    }
+    .model-card__desc { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 18px; line-height: 1.6; }
+
+    .model-card__features { list-style: none; margin-bottom: 20px; }
+    .model-card__features li {
+      font-size: 13px; color: var(--color-text);
+      padding: 6px 0; display: flex; align-items: flex-start; gap: 8px;
+    }
+    .model-card__features li::before {
+      content: '✓'; font-weight: 700; flex-shrink: 0;
+      width: 18px; height: 18px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; font-size: 11px;
+    }
+    .model-card--team .model-card__features li::before { color: var(--color-accent-green); background: var(--color-accent-green-bg); }
+    .model-card--org .model-card__features li::before { color: var(--color-primary); background: var(--color-primary-light); }
+    .model-card--scale .model-card__features li::before { color: var(--color-accent-teal); background: var(--color-accent-teal-bg); }
+
+    .model-card__btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 12px; border-radius: var(--radius-md);
+      font-size: 14px; font-weight: 600; border: none; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .model-card--team .model-card__btn { background: var(--color-accent-green-bg); color: var(--color-accent-green); }
+    .model-card--team .model-card__btn:hover { background: var(--color-accent-green); color: #fff; }
+    .model-card--org .model-card__btn { background: var(--color-primary-light); color: var(--color-primary); }
+    .model-card--org .model-card__btn:hover { background: var(--color-primary); color: #fff; }
+    .model-card--scale .model-card__btn { background: var(--color-accent-teal-bg); color: var(--color-accent-teal); }
+    .model-card--scale .model-card__btn:hover { background: var(--color-accent-teal); color: #fff; }
+
+    /* === Quick Links Bar === */
+    .quick-links {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 28px 32px; margin-bottom: 56px;
+    }
+    .quick-links__title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+    .quick-links__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .quick-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px; border-radius: var(--radius-md);
+      background: var(--color-surface-alt);
+      font-size: 14px; font-weight: 500; color: var(--color-text);
+      transition: all 0.2s; border: 1px solid transparent;
+    }
+    .quick-link:hover {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary);
+      color: var(--color-primary-dark);
+      transform: translateX(4px);
+    }
+    .quick-link__icon { font-size: 20px; flex-shrink: 0; }
+
+    /* === Timeline / Process === */
+    .process {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 36px 32px; margin-bottom: 56px;
+    }
+    .process__steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; }
+    @media (max-width: 900px) { .process__steps { grid-template-columns: 1fr; gap: 24px; } }
+    .process__step { text-align: center; position: relative; padding: 0 12px; }
+    .process__step-number {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--color-primary); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; margin: 0 auto 12px;
+      position: relative; z-index: 2;
+    }
+    .process__step:not(:last-child)::after {
+      content: ''; position: absolute; top: 20px;
+      left: calc(50% + 24px); right: calc(-50% + 24px);
+      height: 3px; background: var(--color-primary-light); z-index: 1;
+    }
+    @media (max-width: 900px) {
+      .process__step:not(:last-child)::after { display: none; }
+    }
+    .process__step-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .process__step-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
+
+    /* === Expandable Detail Panels === */
+    .detail-panel {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      margin-bottom: 16px; overflow: hidden;
+      transition: all 0.3s;
+    }
+    .detail-panel.expanded { border-color: var(--color-primary); }
+    .detail-panel__header {
+      padding: 20px 24px; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.2s;
+    }
+    .detail-panel__header:hover { background: var(--color-surface-alt); }
+    .detail-panel__header-left { display: flex; align-items: center; gap: 14px; }
+    .detail-panel__icon { font-size: 24px; }
+    .detail-panel__title { font-size: 16px; font-weight: 600; }
+    .detail-panel__subtitle { font-size: 13px; color: var(--color-text-secondary); }
+    .detail-panel__chevron {
+      font-size: 18px; color: var(--color-text-light);
+      transition: transform 0.3s;
+    }
+    .detail-panel.expanded .detail-panel__chevron { transform: rotate(180deg); }
+    .detail-panel__content {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+    }
+    .detail-panel.expanded .detail-panel__content { max-height: 600px; }
+    .detail-panel__inner {
+      padding: 0 24px 24px; border-top: 1px solid var(--color-border);
+    }
+    .detail-panel__inner p { font-size: 14px; color: var(--color-text-secondary); margin-top: 16px; line-height: 1.6; }
+    .detail-panel__inner ul { margin: 12px 0 0 20px; }
+    .detail-panel__inner li { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 6px; }
+
+    /* === Delivery Options Toggle === */
+    .delivery-options {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 36px 32px; margin-bottom: 56px;
+    }
+    .delivery-toggle {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px;
+    }
+    @media (max-width: 700px) { .delivery-toggle { grid-template-columns: 1fr; } }
+    .delivery-option {
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      cursor: pointer; transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .delivery-option:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-3px);
+    }
+    .delivery-option.selected {
+      border-color: var(--color-primary);
+      background: var(--color-primary-light);
+    }
+    .delivery-option__badge {
+      position: absolute; top: 12px; right: 12px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+      padding: 3px 10px; border-radius: 10px;
+    }
+    .delivery-option--live .delivery-option__badge {
+      background: var(--color-accent-green-bg); color: var(--color-accent-green);
+    }
+    .delivery-option--async .delivery-option__badge {
+      background: var(--color-accent-orange-bg); color: var(--color-accent-orange);
+    }
+    .delivery-option__icon { font-size: 36px; margin-bottom: 12px; }
+    .delivery-option__title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .delivery-option__desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 14px; }
+    .delivery-option__features { list-style: none; }
+    .delivery-option__features li {
+      font-size: 13px; color: var(--color-text);
+      padding: 4px 0; display: flex; align-items: center; gap: 8px;
+    }
+    .delivery-option__features li::before { content: '•'; color: var(--color-primary); font-weight: 700; }
+    .delivery-option__link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 16px; padding: 10px 20px;
+      border-radius: var(--radius-md);
+      font-size: 14px; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .delivery-option--live .delivery-option__link {
+      background: var(--color-accent-green-bg); color: var(--color-accent-green);
+    }
+    .delivery-option--live .delivery-option__link:hover {
+      background: var(--color-accent-green); color: #fff;
+    }
+    .delivery-option--async .delivery-option__link {
+      background: var(--color-accent-orange-bg); color: var(--color-accent-orange);
+    }
+    .delivery-option--async .delivery-option__link:hover {
+      background: var(--color-accent-orange); color: #fff;
+    }
+
+    /* === 5-Day Agenda === */
+    .agenda {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 36px 32px; margin-bottom: 56px;
+    }
+    .agenda-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 8px;
+    }
+    @media (max-width: 900px) { .agenda-grid { grid-template-columns: 1fr; } }
+    .agenda-day {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden; transition: all 0.2s;
+    }
+    .agenda-day:hover { border-color: var(--color-primary); box-shadow: var(--shadow-card-hover); }
+    .agenda-day__header {
+      padding: 12px 14px;
+      font-size: 14px; font-weight: 700; color: #fff;
+      background: var(--color-primary);
+    }
+    .agenda-day--fri .agenda-day__header {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent-purple));
+    }
+    .agenda-day__time {
+      display: block; font-size: 11px; font-weight: 500; opacity: 0.85; margin-top: 2px;
+    }
+    .agenda-day__body { padding: 12px 14px; }
+    .agenda-slot {
+      padding: 8px 10px; margin-bottom: 6px;
+      background: var(--color-surface-alt);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--color-primary-light);
+      transition: all 0.2s;
+    }
+    .agenda-slot:hover { border-left-color: var(--color-primary); background: var(--color-primary-light); }
+    .agenda-slot__time { font-size: 11px; font-weight: 600; color: var(--color-primary); }
+    .agenda-slot__title { font-size: 13px; font-weight: 500; color: var(--color-text); margin-top: 2px; }
+    .agenda-slot--break { border-left-color: var(--color-accent-orange-bg); }
+    .agenda-slot--break:hover { border-left-color: var(--color-accent-orange); }
+    .agenda-slot--break .agenda-slot__time { color: var(--color-accent-orange); }
+    .agenda-slot--lab { border-left-color: var(--color-accent-green-bg); }
+    .agenda-slot--lab:hover { border-left-color: var(--color-accent-green); }
+    .agenda-slot--lab .agenda-slot__time { color: var(--color-accent-green); }
+    .agenda-note {
+      margin-top: 16px; padding: 14px 18px;
+      background: var(--color-primary-light); border-radius: var(--radius-md);
+      font-size: 13px; color: var(--color-text-secondary); line-height: 1.5;
+    }
+    .agenda-note strong { color: var(--color-text); }
+
+    /* === Audience Picker (Step 1) === */
+    .audience-picker {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 36px 32px; margin-bottom: 40px;
+    }
+    .audience-picker__options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }
+    @media (max-width: 900px) { .audience-picker__options { grid-template-columns: 1fr; } }
+    .audience-card {
+      border: 2px solid var(--color-border); border-radius: var(--radius-lg);
+      padding: 32px 28px; cursor: pointer; transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .audience-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-card-hover); transform: translateY(-4px); }
+    .audience-card.active { border-color: var(--color-primary); background: var(--color-primary-light); }
+    .audience-card.active::after {
+      content: '✓'; position: absolute; top: 14px; right: 16px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--color-primary); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+    }
+    .audience-card__icon { font-size: 52px; margin-bottom: 16px; }
+    .audience-card__title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .audience-card__role {
+      display: inline-block; font-size: 12px; font-weight: 600;
+      color: var(--color-text-secondary); background: var(--color-surface-alt);
+      padding: 3px 10px; border-radius: 12px; margin-bottom: 12px;
+    }
+    .audience-card__desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 16px; }
+    .audience-card__includes { list-style: none; }
+    .audience-card__includes li {
+      font-size: 13px; color: var(--color-text); padding: 5px 0;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .audience-card__includes li::before { content: '→'; color: var(--color-primary); font-weight: 700; }
+    .audience-card--team .audience-card__icon { } /* team uses default color */
+    .audience-card--org .audience-card__icon { }
+    .audience-card--scale .audience-card__icon { }
+
+    .step-connector {
+      text-align: center; padding: 12px 0; color: var(--color-text-light); font-size: 24px;
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .step-connector.visible { opacity: 1; }
+    .steps-container > div { transition: opacity 0.4s, max-height 0.5s ease; }
+    .step-hidden { opacity: 0.3; pointer-events: none; max-height: 80px !important; overflow: hidden; }
+
+    /* === Agenda Choice === */
+    .agenda-choice {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 36px 32px; margin-bottom: 40px;
+    }
+    .agenda-choice__options { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px; }
+    @media (max-width: 700px) { .agenda-choice__options { grid-template-columns: 1fr; } }
+    .agenda-choice__card {
+      border: 2px solid var(--color-border); border-radius: var(--radius-lg);
+      padding: 28px 24px; cursor: pointer; transition: all 0.3s; text-align: center;
+    }
+    .agenda-choice__card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
+    .agenda-choice__card.active { border-color: var(--color-primary); background: var(--color-primary-light); }
+    .agenda-choice__icon { font-size: 48px; margin-bottom: 12px; }
+    .agenda-choice__title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .agenda-choice__desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.5; }
+
+    /* === Standard Agenda (3-week view) === */
+    .standard-agenda { display: none; margin-top: 24px; }
+    .standard-agenda.visible { display: block; }
+    .standard-agenda__week {
+      margin-bottom: 20px; border: 1px solid var(--color-border);
+      border-radius: var(--radius-md); overflow: hidden;
+    }
+    .standard-agenda__week-header {
+      padding: 12px 18px; font-size: 15px; font-weight: 700; color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .standard-agenda__week-header span { font-size: 12px; font-weight: 500; opacity: 0.85; }
+    .week-1-header { background: linear-gradient(90deg, #0078D4, #2B88D8); }
+    .week-2-header { background: linear-gradient(90deg, #CA5010, #E87D2F); }
+    .week-3-header { background: linear-gradient(90deg, #107C10, #3CB043); }
+    .standard-agenda__grid {
+      display: grid; grid-template-columns: 100px repeat(5, 1fr);
+      font-size: 12px; background: var(--color-surface);
+    }
+    .standard-agenda__grid--w2 { grid-template-columns: 100px repeat(5, 1fr); }
+    .standard-agenda__grid--w3 { grid-template-columns: 100px repeat(3, 1fr); }
+    .sa-cell {
+      padding: 6px 8px; border: 1px solid var(--color-border);
+      display: flex; align-items: center; min-height: 32px; line-height: 1.3;
+    }
+    .sa-cell--header { background: var(--color-surface-alt); font-weight: 700; text-align: center; justify-content: center; }
+    .sa-cell--time { background: #f8f8f8; font-weight: 600; color: var(--color-text-secondary); font-size: 11px; }
+    .sa-cell--session { background: #E8F5E9; color: #2E7D32; }
+    .sa-cell--lab { background: #FFF8E1; color: #F57F17; }
+    .sa-cell--break { background: #E3F2FD; color: #1565C0; font-style: italic; }
+    .sa-cell--lunch { background: #FFF3E0; color: #E65100; }
+    .sa-cell--apply { background: #F3E5F5; color: #7B1FA2; }
+    .sa-cell--show { background: #FCE4EC; color: #C62828; }
+    .sa-cell--setup { background: #E0F2F1; color: #00695C; }
+    .sa-cell--hackathon { background: #FFF9C4; color: #F57F17; font-weight: 600; }
+    .sa-cell--span2 { grid-column: span 2; }
+    .sa-cell--span3 { grid-column: span 3; }
+    .sa-cell--span5 { grid-column: span 5; }
+    .sa-cell--span-row2 { grid-row: span 2; }
+    .sa-cell--span-row3 { grid-row: span 3; }
+    .standard-agenda__note {
+      padding: 14px 18px; background: var(--color-primary-light);
+      border-radius: var(--radius-md); font-size: 13px; color: var(--color-text-secondary);
+      margin-top: 16px; line-height: 1.5;
+    }
+    .standard-agenda__cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 16px; padding: 12px 24px; border-radius: var(--radius-md);
+      background: var(--color-primary); color: #fff; font-size: 14px; font-weight: 600;
+      border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .standard-agenda__cta:hover { background: var(--color-primary-dark); transform: translateY(-2px); color: #fff; }
+
+    /* === Agenda Builder === */
+    .agenda-builder { display: none; margin-top: 24px; }
+    .agenda-builder.visible { display: block; }
+    .builder-layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; }
+    @media (max-width: 900px) { .builder-layout { grid-template-columns: 1fr; } }
+    .builder-palette {
+      background: var(--color-surface-alt); border-radius: var(--radius-md);
+      padding: 16px; border: 1px solid var(--color-border); max-height: 600px; overflow-y: auto;
+    }
+    .builder-palette__title { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+    .builder-palette__section { margin-bottom: 16px; }
+    .builder-palette__label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--color-text-secondary); margin-bottom: 8px;
+    }
+    .drag-item {
+      padding: 10px 12px; margin-bottom: 6px;
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm); cursor: grab;
+      font-size: 13px; transition: all 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .drag-item:hover { border-color: var(--color-primary); box-shadow: var(--shadow-card-hover); }
+    .drag-item:active { cursor: grabbing; opacity: 0.7; }
+    .drag-item__badge {
+      font-size: 10px; font-weight: 700; padding: 2px 6px;
+      border-radius: 8px; flex-shrink: 0;
+    }
+    .drag-item--live .drag-item__badge { background: var(--color-accent-green-bg); color: var(--color-accent-green); }
+    .drag-item--recorded .drag-item__badge { background: var(--color-accent-orange-bg); color: var(--color-accent-orange); }
+    .drag-item--fixed .drag-item__badge { background: var(--color-primary-light); color: var(--color-primary); }
+
+    .builder-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+    }
+    @media (max-width: 900px) { .builder-grid { grid-template-columns: repeat(2, 1fr); } }
+    .builder-day {
+      border: 1px solid var(--color-border); border-radius: var(--radius-md);
+      overflow: hidden; background: var(--color-surface);
+    }
+    .builder-day__header {
+      padding: 10px 12px; background: var(--color-primary);
+      color: #fff; font-size: 13px; font-weight: 700;
+    }
+    .builder-day__header span { display: block; font-size: 11px; font-weight: 400; opacity: 0.8; }
+    .builder-day--fri .builder-day__header {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent-purple));
+    }
+    .builder-day__slots { padding: 8px; min-height: 300px; }
+    .drop-slot {
+      min-height: 44px; margin-bottom: 6px; padding: 8px 10px;
+      border: 2px dashed var(--color-border); border-radius: var(--radius-sm);
+      font-size: 12px; color: var(--color-text-light);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; position: relative;
+    }
+    .drop-slot.drag-over { border-color: var(--color-primary); background: var(--color-primary-light); }
+    .drop-slot.filled {
+      border-style: solid; border-color: var(--color-border);
+      background: var(--color-surface-alt); justify-content: flex-start;
+      color: var(--color-text); font-weight: 500;
+    }
+    .drop-slot.filled .slot-remove {
+      position: absolute; top: 4px; right: 6px;
+      font-size: 14px; cursor: pointer; color: var(--color-text-light);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .drop-slot.filled:hover .slot-remove { opacity: 1; }
+    .drop-slot--fixed {
+      border-style: solid; border-color: transparent;
+      background: var(--color-surface-alt); justify-content: flex-start;
+      color: var(--color-text); font-size: 12px;
+    }
+    .drop-slot--fixed .slot-time { color: var(--color-primary); font-weight: 600; font-size: 11px; }
+    .drop-slot--break { background: #E3F2FD; }
+    .drop-slot--lunch { background: #FFF3E0; }
+
+    /* === Footer === */
+    .footer {
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      padding: 24px 32px; text-align: center; margin-top: 48px;
+    }
+    .footer__text { font-size: 13px; color: var(--color-text-light); }
+    .footer__links { margin-top: 8px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .footer__links a { font-size: 13px; font-weight: 500; }
+
+    /* === Animations === */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in { animation: fadeInUp 0.6s ease forwards; }
+    .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header__content">
+      <div class="header__brand">
+        <span class="header__logo">📦</span>
+        <h1 class="header__title">Camp AIR in a Box</h1>
+        <span class="header__subtitle">Deliver Camp AIR to Your People</span>
+      </div>
+      <nav class="header__nav">
+        <a href="https://nowlents.github.io/campAIR-WFA/" target="_blank">🏠 Camp AIR Portal</a>
+        <a href="https://nowlents.github.io/campAIR-WFA/non-engineers" target="_blank">💡 Non-Engineers</a>
+        <a href="https://nowlents.github.io/campAIR-WFA/engineers" target="_blank">⚙️ Engineers</a>
+        <a href="#models" class="active">📦 AIR in a Box</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__inner animate-in">
+      <div class="hero__badge">📦 CAMP AIR IN A BOX</div>
+      <h2 class="hero__title">Deliver Camp AIR Your Way</h2>
+      <p class="hero__subtitle">
+        Three delivery models &mdash; from manager-led team sprints to self-sustaining internal teaching networks. Choose your path, follow the playbook, and launch.
+      </p>
+      <div class="hero__cta-row">
+        <a href="#models" class="hero__cta hero__cta--primary">🚀 Choose Your Model</a>
+        <a href="https://nowlents.github.io/campAIR-WFA/" target="_blank" class="hero__cta hero__cta--secondary">← Back to Camp AIR Portal</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="main">
+
+    <!-- Quick Links to Camp AIR Resources -->
+    <div class="quick-links animate-in animate-delay-1">
+      <div class="quick-links__title">🔗 Camp AIR Resources & Links</div>
+      <div class="quick-links__grid">
+        <a href="https://nowlents.github.io/campAIR-WFA/" target="_blank" class="quick-link">
+          <span class="quick-link__icon">🏕️</span> Camp AIR Deliverables Portal
+        </a>
+        <a href="https://nowlents.github.io/campAIR-WFA/non-engineers" target="_blank" class="quick-link">
+          <span class="quick-link__icon">💡</span> Non-Engineer Track
+        </a>
+        <a href="https://nowlents.github.io/campAIR-WFA/engineers" target="_blank" class="quick-link">
+          <span class="quick-link__icon">⚙️</span> Engineer Track
+        </a>
+        <a href="https://forms.microsoft.com/r/cmPU5hzcYD" target="_blank" class="quick-link">
+          <span class="quick-link__icon">📤</span> Submit Materials for Review
+        </a>
+        <a href="https://microsoft-my.sharepoint.com/personal/jillet_microsoft_com/_layouts/Doc.aspx?sourcedoc={FC361874-ED3F-4A00-B03D-B162E261FEF8}&wd=target%28Camp%20AIR.one%7C544F7F7D-F8D4-47EC-8BE7-0DC561D20F8A%2FCoreAI%20Cohort%203%20Materials%7C0223E367-D5A5-4886-8B2D-70AD53DC13E1%2F%29&wdpartid={1C212416-871E-4800-891E-41F9902BC8D5}{1}&wdsectionfileid={9336388F-F8D3-4A23-8625-65F85A711ABB}&end" target="_blank" class="quick-link">
+          <span class="quick-link__icon">📹</span> Pre-Recorded Session Library
+        </a>
+        <a href="#" class="quick-link">
+          <span class="quick-link__icon">📋</span> Facilitator Lesson Plans
+        </a>
+      </div>
+    </div>
+
+    <!-- Steps Flow -->
+    <section id="models">
+
+      <!-- Step 1: Audience Picker -->
+      <div class="audience-picker animate-in animate-delay-1" id="audience-step">
+        <div class="section-header" style="margin-bottom: 24px;">
+          <span class="section-header__label">Step 1 — Who Are You Delivering To?</span>
+          <h3 class="section-header__title">Choose Your Delivery Scope</h3>
+          <p class="section-header__desc">Pick the delivery path that matches how you want Camp AIR to spread &mdash; directly through a manager, centrally through a V-team, or by building internal teachers who scale it from within.</p>
+        </div>
+        <div class="audience-picker__options">
+          <!-- Manager-Led Option -->
+          <div class="audience-card audience-card--team" onclick="selectAudience('manager', this)">
+            <div class="audience-card__icon">&#128101;</div>
+            <div class="audience-card__title">Manager-Led Camp AIR</div>
+            <div class="audience-card__role">Run Camp AIR for my own team.</div>
+            <p class="audience-card__desc">A leader wants to upskill an intact team directly. Scale mechanism: Manager sponsorship + team participation.</p>
+            <ul class="audience-card__includes">
+              <li>10&ndash;30 people in one intact team</li>
+              <li>Manager sponsorship + team participation</li>
+              <li>Lightweight coordination with a pre-built kit</li>
+              <li>Fast path from kickoff to delivery</li>
+            </ul>
+          </div>
+
+          <!-- V-Team-Led Option -->
+          <div class="audience-card audience-card--org" onclick="selectAudience('vteam', this)">
+            <div class="audience-card__icon">&#127970;</div>
+            <div class="audience-card__title">V-Team-Led Camp AIR</div>
+            <div class="audience-card__role">Run Camp AIR across my organization.</div>
+            <p class="audience-card__desc">A cross-org group can coordinate delivery for many teams. Scale mechanism: Centralized facilitation across a broad group.</p>
+            <ul class="audience-card__includes">
+              <li>50&ndash;500+ people across multiple teams</li>
+              <li>Centralized facilitation across a broad group</li>
+              <li>Multi-cohort scheduling, registration, and comms</li>
+              <li>Shared reporting, governance, and sponsor alignment</li>
+            </ul>
+          </div>
+
+          <!-- Scale-from-Within Option -->
+          <div class="audience-card audience-card--scale" onclick="selectAudience('scale', this)">
+            <div class="audience-card__icon">&#127793;</div>
+            <div class="audience-card__title">Scale-from-Within Camp AIR</div>
+            <div class="audience-card__role">Build internal teachers who can run Camp AIR for their peers.</div>
+            <p class="audience-card__desc">An org wants durable, repeatable AI capacity inside existing teams. Scale mechanism: Train-the-trainers &mdash; Pioneers become Coaches and create the next wave.</p>
+            <ul class="audience-card__includes">
+              <li>Internal teachers seeded inside participating teams</li>
+              <li>Train-the-trainers model that compounds over time</li>
+              <li>Pioneers co-lead delivery and sustain adoption after camp</li>
+              <li>Real-work application tied to team workflows</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-connector" id="connector-1">&#9660;</div>
+
+      <!-- Step 2: Agenda Choice -->
+      <div class="agenda-choice animate-in animate-delay-1 step-hidden" id="agenda-step">
+        <div class="section-header" style="margin-bottom: 24px;">
+          <span class="section-header__label">Step 2 — Choose Your Agenda</span>
+          <h3 class="section-header__title">Standard Agenda or Build Your Own?</h3>
+          <p class="section-header__desc">Start with the proven Camp AIR Immersion Week agenda, or customize your own by dragging sessions into time slots.</p>
+        </div>
+        <div class="agenda-choice__options">
+          <div class="agenda-choice__card" onclick="showAgendaOption('standard', this)">
+            <div class="agenda-choice__icon">📋</div>
+            <div class="agenda-choice__title">Use the Standard Agenda</div>
+            <div class="agenda-choice__desc">The proven 3-week Camp AIR structure — Immersion Week, Hackathon Prep, and Showcase — ready to go as-is.</div>
+          </div>
+          <div class="agenda-choice__card" onclick="showAgendaOption('builder', this)">
+            <div class="agenda-choice__icon">🛠️</div>
+            <div class="agenda-choice__title">Build Your Own Agenda</div>
+            <div class="agenda-choice__desc">Drag and drop pre-recorded sessions and SME-led options into your own custom weekly schedule.</div>
+          </div>
+        </div>
+
+        <!-- Standard Agenda View -->
+        <div class="standard-agenda" id="standard-agenda">
+          <!-- Week 1: Immersion Week -->
+          <div class="standard-agenda__week">
+            <div class="standard-agenda__week-header week-1-header">
+              Week 1 — Immersion Week <span>Mon–Fri · Full Schedule</span>
+            </div>
+            <div class="standard-agenda__grid">
+              <div class="sa-cell sa-cell--header">Time</div>
+              <div class="sa-cell sa-cell--header">Monday</div>
+              <div class="sa-cell sa-cell--header">Tuesday</div>
+              <div class="sa-cell sa-cell--header">Wednesday</div>
+              <div class="sa-cell sa-cell--header">Thursday</div>
+              <div class="sa-cell sa-cell--header">Friday</div>
+
+              <div class="sa-cell sa-cell--time">9:00–10:00</div>
+              <div class="sa-cell sa-cell--session">🎤 Camp AIR Kickoff & Icebreaker</div>
+              <div class="sa-cell sa-cell--setup">🔄 Recap + Quick Setup Check</div>
+              <div class="sa-cell sa-cell--session">🤖 Designing Systems That Act (Agents) — Agency Concepts Lab</div>
+              <div class="sa-cell sa-cell--setup">🔄 Recap + Quick Setup Check</div>
+              <div class="sa-cell sa-cell--session" style="grid-row: span 2;">👁️ See AI in Real Workflows + Hackathon Planning & Close Out</div>
+
+              <div class="sa-cell sa-cell--time">10:00–11:00</div>
+              <div class="sa-cell sa-cell--session">🧠 Mindset & New Habits</div>
+              <div class="sa-cell sa-cell--break">☕ Break (30 min)</div>
+              <div class="sa-cell sa-cell--break">☕ Break (15 min)</div>
+              <div class="sa-cell sa-cell--break">☕ Break (30 min)</div>
+
+              <div class="sa-cell sa-cell--time">11:00–12:00</div>
+              <div class="sa-cell sa-cell--break">☕ Break (15 min)</div>
+              <div class="sa-cell sa-cell--session">📐 Structuring Problems for AI Execution — MCP Concepts Lab</div>
+              <div class="sa-cell sa-cell--session">🚀 Improve Productivity in Engineering Assets — IES AI Tool Offerings</div>
+              <div class="sa-cell sa-cell--session">🛡️ Design AI Systems You Can Trust — Responsible AI</div>
+              <div class="sa-cell sa-cell--hackathon" style="grid-row: span 4;">📊 Analyze Your Workflows for AI Opportunities — Pre-Gemba Walk</div>
+
+              <div class="sa-cell sa-cell--time">11:30–12:15</div>
+              <div class="sa-cell sa-cell--setup">🔧 Setting Up Your AI Workspace — Tool & Environment Setup</div>
+              <div class="sa-cell sa-cell--setup">Quick Setup Check (Agency & IES)</div>
+              <div class="sa-cell sa-cell--setup">Quick Setup Check (BlueBird & Vibe Coding)</div>
+              <div class="sa-cell sa-cell--session">continued...</div>
+
+              <div class="sa-cell sa-cell--time">12:15–1:30</div>
+              <div class="sa-cell sa-cell--lunch">🍽️ Lunch</div>
+              <div class="sa-cell sa-cell--lunch">🍽️ Lunch</div>
+              <div class="sa-cell sa-cell--lunch">🍽️ Lunch</div>
+              <div class="sa-cell sa-cell--lunch">🍽️ Lunch</div>
+
+              <div class="sa-cell sa-cell--time">1:30–3:00</div>
+              <div class="sa-cell sa-cell--lab">🔬 Move from Writing → Guiding Code Gen (GitHub App)</div>
+              <div class="sa-cell sa-cell--lab">🔬 Move from Writing → Guiding Code Gen (VS Code + CLI)</div>
+              <div class="sa-cell sa-cell--lab">🔬 Grounding AI in Real Data (BlueBird Concepts Lab) + Turn Ideas into Solutions (Vibe Coding)</div>
+              <div class="sa-cell sa-cell--lab">🔬 Measure & Improve AI Outputs — AI Eval</div>
+
+              <div class="sa-cell sa-cell--time">2:30–4:00</div>
+              <div class="sa-cell sa-cell--apply">⭐ Apply & Build</div>
+              <div class="sa-cell sa-cell--apply">⭐ Apply & Build</div>
+              <div class="sa-cell sa-cell--apply">⭐ Apply & Build</div>
+              <div class="sa-cell sa-cell--apply">⭐ Apply & Build</div>
+              <div class="sa-cell sa-cell--hackathon" style="grid-row: span 2;">🏗️ Hackathon Ideation & Practice</div>
+
+              <div class="sa-cell sa-cell--time">4:00–4:30</div>
+              <div class="sa-cell sa-cell--show">🎤 Show & Tell</div>
+              <div class="sa-cell sa-cell--show">🎤 Show & Tell</div>
+              <div class="sa-cell sa-cell--show">🎤 Show & Tell</div>
+              <div class="sa-cell sa-cell--show">🎤 Show & Tell</div>
+            </div>
+          </div>
+
+          <!-- Week 2 -->
+          <div class="standard-agenda__week">
+            <div class="standard-agenda__week-header week-2-header">
+              Week 2 — Hackathon Prep <span>Mon–Fri · Self-Directed + Coaching</span>
+            </div>
+            <div style="padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 14px;">
+              <div style="padding: 16px; background: #FFF8E1; border-radius: 8px; border-left: 4px solid #F57F17;">
+                <strong>🔍 Analyze workflows</strong><br>Identify AI opportunities using Pre-Gemba Walk framework
+              </div>
+              <div style="padding: 16px; background: #E8F5E9; border-radius: 8px; border-left: 4px solid #2E7D32;">
+                <strong>🏗️ Hackathon Ideation</strong><br>Teams form, scope projects, begin building prototypes
+              </div>
+              <div style="padding: 16px; background: #E3F2FD; border-radius: 8px; border-left: 4px solid #1565C0;">
+                <strong>🧑‍🏫 Coaching Sessions</strong><br>SME office hours and team check-ins throughout the week
+              </div>
+              <div style="padding: 16px; background: #F3E5F5; border-radius: 8px; border-left: 4px solid #7B1FA2;">
+                <strong>📋 Planning & Close Out</strong><br>Finalize hackathon scope and prepare for Week 3
+              </div>
+            </div>
+          </div>
+
+          <!-- Week 3 -->
+          <div class="standard-agenda__week">
+            <div class="standard-agenda__week-header week-3-header">
+              Week 3 — Hackathon & Showcase <span>Mon–Wed · Build & Present</span>
+            </div>
+            <div style="padding: 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; font-size: 14px;">
+              <div style="padding: 16px; background: #E8F5E9; border-radius: 8px; border-left: 4px solid #2E7D32;">
+                <strong>Mon–Tue</strong><br>🏗️ Hackathon Week — Teams build and refine their AI-powered solutions
+              </div>
+              <div style="padding: 16px; background: #FFF8E1; border-radius: 8px; border-left: 4px solid #F57F17;">
+                <strong>Wed</strong><br>📆 Date Finalization — Prep demos and presentations
+              </div>
+              <div style="padding: 16px; background: #FCE4EC; border-radius: 8px; border-left: 4px solid #C62828;">
+                <strong>Demo Day</strong><br>🎤 Demos in Front of Leadership — Teams showcase AI solutions to executives
+              </div>
+            </div>
+          </div>
+
+          <div class="standard-agenda__note">
+            <strong>✅ This is the proven agenda from Camp AIR Cohort 2.0 (Engineering Track).</strong> You can adopt this as-is or use it as a starting point. Sessions can be delivered live by your SMEs or via pre-recorded sessions from the library.
+          </div>
+          <button class="standard-agenda__cta" onclick="document.getElementById('delivery-options').scrollIntoView({behavior:'smooth'})">
+            ✅ Use This Agenda — Continue to Delivery Options →
+          </button>
+        </div>
+
+        <!-- Custom Agenda Builder -->
+        <div class="agenda-builder" id="agenda-builder">
+          <div class="builder-layout">
+            <!-- Session Palette -->
+            <div class="builder-palette">
+              <div class="builder-palette__title">📦 Session Library</div>
+              <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:14px;">Drag sessions into the day slots on the right. Mix live and pre-recorded.</p>
+
+              <div class="builder-palette__section">
+                <div class="builder-palette__label">🎤 SME-Led (Live)</div>
+                <div class="drag-item drag-item--live" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">LIVE</span> Camp AIR Kickoff & Icebreaker
+                </div>
+                <div class="drag-item drag-item--live" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">LIVE</span> Mindset & New Habits
+                </div>
+                <div class="drag-item drag-item--live" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">LIVE</span> Structuring Problems for AI — MCP
+                </div>
+                <div class="drag-item drag-item--live" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">LIVE</span> Designing Systems That Act (Agents)
+                </div>
+                <div class="drag-item drag-item--live" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">LIVE</span> Responsible AI
+                </div>
+                <div class="drag-item drag-item--live" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">LIVE</span> IES AI Tool Offerings
+                </div>
+                <div class="drag-item drag-item--live" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">LIVE</span> Show & Tell / Showcase
+                </div>
+                <div class="drag-item drag-item--live" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">LIVE</span> Apply & Build
+                </div>
+              </div>
+
+              <div class="builder-palette__section">
+                <div class="builder-palette__label">📹 Pre-Recorded (Async)</div>
+                <div class="drag-item drag-item--recorded" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">REC</span> Move Writing → Code Gen (GitHub App)
+                </div>
+                <div class="drag-item drag-item--recorded" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">REC</span> Move Writing → Code Gen (VS Code + CLI)
+                </div>
+                <div class="drag-item drag-item--recorded" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">REC</span> Grounding AI in Real Data (BlueBird)
+                </div>
+                <div class="drag-item drag-item--recorded" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">REC</span> Vibe Coding — Ideas to Solutions
+                </div>
+                <div class="drag-item drag-item--recorded" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">REC</span> Measure & Improve AI Outputs (AI Eval)
+                </div>
+                <div class="drag-item drag-item--recorded" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">REC</span> See AI in Real Workflows
+                </div>
+                <div class="drag-item drag-item--recorded" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">REC</span> Agency Concepts Lab
+                </div>
+                <div class="drag-item drag-item--recorded" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">REC</span> MCP Concepts Lab
+                </div>
+              </div>
+
+              <div class="builder-palette__section">
+                <div class="builder-palette__label">⏰ Fixed Blocks</div>
+                <div class="drag-item drag-item--fixed" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">FIX</span> ☕ Break (15 min)
+                </div>
+                <div class="drag-item drag-item--fixed" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">FIX</span> 🍽️ Lunch
+                </div>
+                <div class="drag-item drag-item--fixed" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">FIX</span> 🔄 Recap of Previous Day
+                </div>
+                <div class="drag-item drag-item--fixed" draggable="true" ondragstart="dragStart(event, this)">
+                  <span class="drag-item__badge">FIX</span> 🔧 Quick Setup Check
+                </div>
+              </div>
+            </div>
+
+            <!-- Drop Grid -->
+            <div class="builder-grid">
+              <div class="builder-day" id="builder-mon">
+                <div class="builder-day__header">Monday <span>9:00 AM – 4:30 PM</span></div>
+                <div class="builder-day__slots" id="slots-mon">
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">9:00 – 10:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">10:00 – 11:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">11:00 – 12:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">12:00 – 1:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">1:00 – 2:30</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">2:30 – 4:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">4:00 – 4:30</div>
+                </div>
+              </div>
+              <div class="builder-day" id="builder-tue">
+                <div class="builder-day__header">Tuesday <span>9:00 AM – 4:30 PM</span></div>
+                <div class="builder-day__slots" id="slots-tue">
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">9:00 – 10:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">10:00 – 11:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">11:00 – 12:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">12:00 – 1:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">1:00 – 2:30</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">2:30 – 4:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">4:00 – 4:30</div>
+                </div>
+              </div>
+              <div class="builder-day" id="builder-wed">
+                <div class="builder-day__header">Wednesday <span>9:00 AM – 4:30 PM</span></div>
+                <div class="builder-day__slots" id="slots-wed">
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">9:00 – 10:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">10:00 – 11:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">11:00 – 12:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">12:00 – 1:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">1:00 – 2:30</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">2:30 – 4:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">4:00 – 4:30</div>
+                </div>
+              </div>
+              <div class="builder-day" id="builder-thu">
+                <div class="builder-day__header">Thursday <span>9:00 AM – 4:30 PM</span></div>
+                <div class="builder-day__slots" id="slots-thu">
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">9:00 – 10:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">10:00 – 11:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">11:00 – 12:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">12:00 – 1:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">1:00 – 2:30</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">2:30 – 4:00</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">4:00 – 4:30</div>
+                </div>
+              </div>
+              <div class="builder-day builder-day--fri" id="builder-fri">
+                <div class="builder-day__header">Friday <span>9:00 AM – 11:00 AM</span></div>
+                <div class="builder-day__slots" id="slots-fri">
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">9:00 – 9:30</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">9:30 – 10:30</div>
+                  <div class="drop-slot" ondrop="dropItem(event, this)" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)">10:30 – 11:00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="standard-agenda__note" style="margin-top: 16px;">
+            <strong>💡 Tip:</strong> Drag sessions from the palette on the left into any time slot. Click the ✕ on a filled slot to remove it. You can mix LIVE (SME-led) and REC (pre-recorded) sessions freely.
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery Options: Live vs Pre-Recorded -->
+      <div class="delivery-options animate-in animate-delay-2" id="delivery-options">
+        <div class="section-header" style="margin-bottom: 24px;">
+          <span class="section-header__label">Step 3 — Session Delivery Options</span>
+          <h3 class="section-header__title">How Will Sessions Be Delivered?</h3>
+          <p class="section-header__desc">Choose between live facilitation by your own SMEs or pre-recorded sessions from the asynchronous library. You can mix both approaches within a single cohort.</p>
+        </div>
+        <div class="delivery-toggle">
+          <!-- Live SME Option -->
+          <div class="delivery-option delivery-option--live" onclick="selectDelivery(this, 'live')">
+            <span class="delivery-option__badge">SYNCHRONOUS</span>
+            <div class="delivery-option__icon">🎤</div>
+            <div class="delivery-option__title">Have Your Own SME Deliver</div>
+            <p class="delivery-option__desc">Your subject matter experts deliver sessions live to participants. Best for interactive Q&A, team-specific customization, and real-time coaching.</p>
+            <ul class="delivery-option__features">
+              <li>Live facilitation with real-time interaction</li>
+              <li>Customizable to your team's context & tools</li>
+              <li>Uses structured facilitator lesson plans & session flows</li>
+              <li>Requires trained facilitator (TtT available)</li>
+            </ul>
+            <a href="https://nowlents.github.io/campAIR-WFA/" target="_blank" class="delivery-option__link">
+              📚 View Facilitator Materials →
+            </a>
+          </div>
+
+          <!-- Pre-Recorded Option -->
+          <div class="delivery-option delivery-option--async" onclick="selectDelivery(this, 'async')">
+            <span class="delivery-option__badge">ASYNCHRONOUS</span>
+            <div class="delivery-option__icon">📹</div>
+            <div class="delivery-option__title">Use a Pre-Recorded Session</div>
+            <p class="delivery-option__desc">Leverage the pre-recorded session library from CoreAI Cohort 3. Participants watch at their own pace with structured guidance and discussion prompts.</p>
+            <ul class="delivery-option__features">
+              <li>No live facilitator needed — ready to go</li>
+              <li>Consistent delivery quality across all cohorts</li>
+              <li>Flexible scheduling — participants watch on their own time</li>
+              <li>Pair with live discussion sessions for deeper engagement</li>
+            </ul>
+            <a href="https://microsoft-my.sharepoint.com/personal/jillet_microsoft_com/_layouts/Doc.aspx?sourcedoc={FC361874-ED3F-4A00-B03D-B162E261FEF8}&wd=target%28Camp%20AIR.one%7C544F7F7D-F8D4-47EC-8BE7-0DC561D20F8A%2FCoreAI%20Cohort%203%20Materials%7C0223E367-D5A5-4886-8B2D-70AD53DC13E1%2F%29&wdpartid={1C212416-871E-4800-891E-41F9902BC8D5}{1}&wdsectionfileid={9336388F-F8D3-4A23-8625-65F85A711ABB}&end" target="_blank" class="delivery-option__link">
+              📹 Browse Recording Library →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header animate-in animate-delay-2">
+        <span class="section-header__label">Choose Your Delivery Model</span>
+        <h3 class="section-header__title">How Do You Want to Run Camp AIR?</h3>
+        <p class="section-header__desc">
+          Select the model that fits your scale. Each comes with a complete operational playbook — from registration to measurement.
+        </p>
+      </div>
+
+      <div class="models-grid">
+        <!-- Manager-Led -->
+        <div class="model-card model-card--team animate-in animate-delay-2" onclick="scrollToPanel('panel-manager')">
+          <div class="model-card__accent"></div>
+          <div class="model-card__body">
+            <div class="model-card__icon">&#128101;</div>
+            <div class="model-card__title">Manager-Led</div>
+            <div class="model-card__audience">10&ndash;30 people &middot; 1 team/group</div>
+            <p class="model-card__desc">
+              Run a focused Camp AIR experience for a single team. Ideal for managers who want to upskill their immediate team quickly with minimal coordination overhead.
+            </p>
+            <ul class="model-card__features">
+              <li>Lightweight setup &mdash; manager-led coordination</li>
+              <li>Pre-built 3-week agenda & lab selection guide</li>
+              <li>Self-contained facilitator kit</li>
+              <li>Built-in measurement & feedback templates</li>
+            </ul>
+            <button class="model-card__btn">Explore Manager-Led Playbook &rarr;</button>
+          </div>
+        </div>
+
+        <!-- V-Team-Led -->
+        <div class="model-card model-card--org animate-in animate-delay-3" onclick="scrollToPanel('panel-vteam')">
+          <div class="model-card__accent"></div>
+          <div class="model-card__body">
+            <div class="model-card__icon">&#127970;</div>
+            <div class="model-card__title">V-Team-Led (Org/Division)</div>
+            <div class="model-card__audience">50&ndash;500+ people &middot; Multi-team coordination</div>
+            <p class="model-card__desc">
+              Coordinate Camp AIR across many teams through a central V-team or program office. Best when you need consistent delivery, shared operations, and visible impact across a broad group.
+            </p>
+            <ul class="model-card__features">
+              <li>Multi-cohort scheduling, registration, and cohort orchestration</li>
+              <li>Facilitator enablement pipeline with Train-the-Trainer support</li>
+              <li>Centralized comms, stakeholder alignment, and executive sponsorship</li>
+              <li>Cross-team measurement, dashboards, and impact reporting</li>
+            </ul>
+            <button class="model-card__btn">Explore V-Team-Led Playbook &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Scale-from-Within -->
+        <div class="model-card model-card--scale animate-in animate-delay-4" onclick="scrollToPanel('panel-scale')">
+          <div class="model-card__accent"></div>
+          <div class="model-card__body">
+            <div class="model-card__icon">&#127793;</div>
+            <div class="model-card__title">Scale-from-Within</div>
+            <div class="model-card__audience">Pioneers, Coaches & peer teachers &middot; Durable scaling</div>
+            <p class="model-card__desc">
+              Build internal teachers who can run Camp AIR for their peers &mdash; creating a self-sustaining network of Pioneers, Coaches, and change-makers.
+            </p>
+            <ul class="model-card__features">
+              <li>Pioneer nomination & preparation before camp</li>
+              <li>Pioneers co-facilitate alongside SMEs during camp</li>
+              <li>Post-camp sustainment &mdash; Pioneers become peer teachers</li>
+              <li>Self-scaling model &mdash; each cohort creates the next wave of teachers</li>
+              <li>Real-work application tied to actual team workflows</li>
+            </ul>
+            <button class="model-card__btn">Explore Scale-from-Within Playbook &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Operational Process Timeline -->
+    <div class="process animate-in animate-delay-3">
+      <div class="section-header" style="margin-bottom: 32px;">
+        <span class="section-header__label">End-to-End Operations</span>
+        <h3 class="section-header__title">From Registration to Measurement</h3>
+        <p class="section-header__desc">The operational backbone that powers every Camp AIR rollout — regardless of scale.</p>
+      </div>
+      <div class="process__steps">
+        <div class="process__step">
+          <div class="process__step-number">1</div>
+          <div class="process__step-title">Plan & Scope</div>
+          <div class="process__step-desc">Define audience, select track (Eng / Non-Eng), choose labs, set dates</div>
+        </div>
+        <div class="process__step">
+          <div class="process__step-number">2</div>
+          <div class="process__step-title">Register & Onboard</div>
+          <div class="process__step-desc">Open registration, form cohorts, send pre-work & facilitator prep</div>
+        </div>
+        <div class="process__step">
+          <div class="process__step-number">3</div>
+          <div class="process__step-title">Deliver</div>
+          <div class="process__step-desc">Run the 3-week immersion with live labs, cohort sessions & team builds</div>
+        </div>
+        <div class="process__step">
+          <div class="process__step-number">4</div>
+          <div class="process__step-title">Showcase</div>
+          <div class="process__step-desc">Teams present AI-powered solutions, share impact, cross-pollinate ideas</div>
+        </div>
+        <div class="process__step">
+          <div class="process__step-number">5</div>
+          <div class="process__step-title">Measure & Iterate</div>
+          <div class="process__step-desc">Collect feedback, report outcomes, refine for next cohort</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5-Day Agenda Template -->
+    <div class="agenda animate-in">
+      <div class="section-header" style="margin-bottom: 24px;">
+        <span class="section-header__label">Weekly Agenda Template</span>
+        <h3 class="section-header__title">5-Day Camp AIR Week</h3>
+        <p class="section-header__desc">Each week of Camp AIR follows this structure. Monday–Thursday are full days (9:00 AM – 4:30 PM). Friday is a half day (9:00 AM – 11:00 AM).</p>
+      </div>
+      <div class="agenda-grid">
+        <!-- Monday -->
+        <div class="agenda-day">
+          <div class="agenda-day__header">Monday<span class="agenda-day__time">9:00 AM – 4:30 PM</span></div>
+          <div class="agenda-day__body">
+            <div class="agenda-slot"><div class="agenda-slot__time">9:00 – 9:30</div><div class="agenda-slot__title">Welcome & Week Kickoff</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">9:30 – 11:00</div><div class="agenda-slot__title">Session 1 — TBD</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">11:00 – 11:15</div><div class="agenda-slot__title">☕ Break</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">11:15 – 12:30</div><div class="agenda-slot__title">Session 2 — TBD</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">12:30 – 1:30</div><div class="agenda-slot__title">🍽️ Lunch</div></div>
+            <div class="agenda-slot agenda-slot--lab"><div class="agenda-slot__time">1:30 – 3:00</div><div class="agenda-slot__title">🔬 Lab Session</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">3:00 – 3:15</div><div class="agenda-slot__title">☕ Break</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">3:15 – 4:30</div><div class="agenda-slot__title">Team Working Time</div></div>
+          </div>
+        </div>
+        <!-- Tuesday -->
+        <div class="agenda-day">
+          <div class="agenda-day__header">Tuesday<span class="agenda-day__time">9:00 AM – 4:30 PM</span></div>
+          <div class="agenda-day__body">
+            <div class="agenda-slot"><div class="agenda-slot__time">9:00 – 9:15</div><div class="agenda-slot__title">Day 2 Check-In</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">9:15 – 11:00</div><div class="agenda-slot__title">Session 3 — TBD</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">11:00 – 11:15</div><div class="agenda-slot__title">☕ Break</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">11:15 – 12:30</div><div class="agenda-slot__title">Session 4 — TBD</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">12:30 – 1:30</div><div class="agenda-slot__title">🍽️ Lunch</div></div>
+            <div class="agenda-slot agenda-slot--lab"><div class="agenda-slot__time">1:30 – 3:00</div><div class="agenda-slot__title">🔬 Lab Session</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">3:00 – 3:15</div><div class="agenda-slot__title">☕ Break</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">3:15 – 4:30</div><div class="agenda-slot__title">Team Working Time</div></div>
+          </div>
+        </div>
+        <!-- Wednesday -->
+        <div class="agenda-day">
+          <div class="agenda-day__header">Wednesday<span class="agenda-day__time">9:00 AM – 4:30 PM</span></div>
+          <div class="agenda-day__body">
+            <div class="agenda-slot"><div class="agenda-slot__time">9:00 – 9:15</div><div class="agenda-slot__title">Day 3 Check-In</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">9:15 – 11:00</div><div class="agenda-slot__title">Session 5 — TBD</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">11:00 – 11:15</div><div class="agenda-slot__title">☕ Break</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">11:15 – 12:30</div><div class="agenda-slot__title">Session 6 — TBD</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">12:30 – 1:30</div><div class="agenda-slot__title">🍽️ Lunch</div></div>
+            <div class="agenda-slot agenda-slot--lab"><div class="agenda-slot__time">1:30 – 3:00</div><div class="agenda-slot__title">🔬 Lab Session</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">3:00 – 3:15</div><div class="agenda-slot__title">☕ Break</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">3:15 – 4:30</div><div class="agenda-slot__title">Team Working Time</div></div>
+          </div>
+        </div>
+        <!-- Thursday -->
+        <div class="agenda-day">
+          <div class="agenda-day__header">Thursday<span class="agenda-day__time">9:00 AM – 4:30 PM</span></div>
+          <div class="agenda-day__body">
+            <div class="agenda-slot"><div class="agenda-slot__time">9:00 – 9:15</div><div class="agenda-slot__title">Day 4 Check-In</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">9:15 – 11:00</div><div class="agenda-slot__title">Session 7 — TBD</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">11:00 – 11:15</div><div class="agenda-slot__title">☕ Break</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">11:15 – 12:30</div><div class="agenda-slot__title">Session 8 — TBD</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">12:30 – 1:30</div><div class="agenda-slot__title">🍽️ Lunch</div></div>
+            <div class="agenda-slot agenda-slot--lab"><div class="agenda-slot__time">1:30 – 3:00</div><div class="agenda-slot__title">🔬 Lab Session</div></div>
+            <div class="agenda-slot agenda-slot--break"><div class="agenda-slot__time">3:00 – 3:15</div><div class="agenda-slot__title">☕ Break</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">3:15 – 4:30</div><div class="agenda-slot__title">Team Working Time / Showcase Prep</div></div>
+          </div>
+        </div>
+        <!-- Friday -->
+        <div class="agenda-day agenda-day--fri">
+          <div class="agenda-day__header">Friday<span class="agenda-day__time">9:00 AM – 11:00 AM</span></div>
+          <div class="agenda-day__body">
+            <div class="agenda-slot"><div class="agenda-slot__time">9:00 – 9:15</div><div class="agenda-slot__title">Week Reflection</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">9:15 – 10:30</div><div class="agenda-slot__title">Showcase / Retro</div></div>
+            <div class="agenda-slot"><div class="agenda-slot__time">10:30 – 11:00</div><div class="agenda-slot__title">Next Week Preview & Close</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="agenda-note">
+        <strong>📝 Note:</strong> Agenda slots marked "TBD" will be populated with your selected sessions — either live SME-delivered or pre-recorded from the asynchronous library. Standard agenda items (kickoffs, breaks, labs, team time) remain consistent across all cohorts. You'll provide your specific session selections when you configure your rollout.
+      </div>
+    </div>
+
+    <!-- Expandable Detail Panels -->
+    <div class="section-header animate-in" style="margin-top: 16px;">
+      <span class="section-header__label">Operational Playbooks</span>
+      <h3 class="section-header__title">What's Inside Each Model</h3>
+      <p class="section-header__desc">Expand each section to see the details. Full playbooks with step-by-step guides are coming soon.</p>
+    </div>
+
+    <div class="detail-panel" id="panel-manager" onclick="togglePanel(this)">
+      <div class="detail-panel__header">
+        <div class="detail-panel__header-left">
+          <span class="detail-panel__icon">&#128101;</span>
+          <div>
+            <div class="detail-panel__title">Manager-Led &mdash; Team Delivery</div>
+            <div class="detail-panel__subtitle">10&ndash;30 participants &middot; 3 weeks &middot; Lightweight ops</div>
+          </div>
+        </div>
+        <span class="detail-panel__chevron">&#9660;</span>
+      </div>
+      <div class="detail-panel__content">
+        <div class="detail-panel__inner">
+          <p>The Manager-Led model is designed for a single manager to bring Camp AIR to their team with minimal overhead. The manager acts as the coordinator, using a pre-packaged facilitator kit and selecting from curated lab options.</p>
+          <ul>
+            <li><strong>Who runs it:</strong> Team manager + 1 facilitator (can be the same person)</li>
+            <li><strong>Registration:</strong> Simple sign-up via Teams or email &mdash; no formal registration system needed</li>
+            <li><strong>Labs:</strong> Pick 3&ndash;4 from the curated non-engineering or engineering lab catalog</li>
+            <li><strong>Facilitation:</strong> Facilitator lesson plans included &mdash; no TtT required at this scale</li>
+            <li><strong>Measurement:</strong> Pre/post survey templates + team impact summary</li>
+            <li><strong>Timeline:</strong> 1 week to prep, 3 weeks to deliver, 1 week to wrap</li>
+          </ul>
+          <p><em>&#128221; Detailed playbook with templates, timelines, and checklists &mdash; coming soon.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-panel" id="panel-vteam" onclick="togglePanel(this)">
+      <div class="detail-panel__header">
+        <div class="detail-panel__header-left">
+          <span class="detail-panel__icon">&#127970;</span>
+          <div>
+            <div class="detail-panel__title">V-Team-Led (Org/Division) &mdash; Central Coordination</div>
+            <div class="detail-panel__subtitle">50&ndash;500+ participants &middot; Multiple cohorts &middot; Coordinated ops at scale</div>
+          </div>
+        </div>
+        <span class="detail-panel__chevron">&#9660;</span>
+      </div>
+      <div class="detail-panel__content">
+        <div class="detail-panel__inner">
+          <p>The V-Team-Led model combines the organization and division playbooks into one centralized operating model. A cross-org team coordinates cohorts, facilitator readiness, stakeholder communications, and reporting so many teams can move together without each team reinventing the rollout.</p>
+          <ul>
+            <li><strong>Who runs it:</strong> Program lead or V-team + ops support + facilitator pool + sponsor alignment</li>
+            <li><strong>Registration:</strong> Centralized registration form with cohort, wave, and team assignment</li>
+            <li><strong>Labs:</strong> Consistent lab track across cohorts with governed customization by audience</li>
+            <li><strong>Facilitation:</strong> Train-the-Trainer sessions, facilitator pipeline, and quality assurance for consistent delivery</li>
+            <li><strong>Comms:</strong> Centralized announcements, reminders, manager enablement, and wrap-up templates</li>
+            <li><strong>Sponsorship:</strong> Executive and manager sponsor motions to reinforce why the rollout matters</li>
+            <li><strong>Measurement:</strong> Cross-cohort dashboards, stakeholder readouts, ROI framing, and showcase reporting</li>
+            <li><strong>Governance:</strong> Shared content review, versioning, and operational checklists for scale</li>
+            <li><strong>Timeline:</strong> 3&ndash;6 weeks to prep depending on scope, 3-week cohort delivery, then ongoing measurement and follow-on waves</li>
+          </ul>
+          <p><em>&#128221; Detailed playbook with templates, timelines, and checklists &mdash; coming soon.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-panel" id="panel-scale" onclick="togglePanel(this)">
+      <div class="detail-panel__header">
+        <div class="detail-panel__header-left">
+          <span class="detail-panel__icon">&#127793;</span>
+          <div>
+            <div class="detail-panel__title">Scale-from-Within &mdash; Pioneer-to-Coach Model</div>
+            <div class="detail-panel__subtitle">3&ndash;4 weeks prep &middot; 3 weeks delivery &middot; Ongoing sustainment</div>
+          </div>
+        </div>
+        <span class="detail-panel__chevron">&#9660;</span>
+      </div>
+      <div class="detail-panel__content">
+        <div class="detail-panel__inner">
+          <p>Scale-from-Within starts before the formal camp begins. Each participating team nominates people with credibility, curiosity, and peer influence. These Pioneers are prepared in advance to learn the Camp AIR methods, practice facilitation, adapt materials to their team context, and co-lead delivery.</p>
+          <ul>
+            <li><strong>Leadership sponsorship:</strong> Leaders protect time, clarify why AI empowerment matters</li>
+            <li><strong>Pioneer nomination:</strong> Teams identify people who can become credible peer teachers</li>
+            <li><strong>Trainer preparation:</strong> Pioneers learn Camp AIR methods, facilitation moves before camp</li>
+            <li><strong>Real-work application:</strong> Activities connect to actual workflows, not abstract demos</li>
+            <li><strong>Post-camp sustainment:</strong> Pioneers keep teaching, sharing patterns, identifying next wave</li>
+          </ul>
+          <p><strong>Operating model:</strong> Before camp &rarr; During camp &rarr; After camp cycle</p>
+          <p><strong>Timeline:</strong> 3&ndash;4 weeks prep (includes Pioneer enablement), 3 weeks delivery, ongoing sustainment</p>
+          <p><em>&#128221; Detailed playbook with templates, timelines, and checklists &mdash; coming soon.</em></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__text">Camp AIR in a Box · Workforce Acceleration · Microsoft</div>
+    <div class="footer__links">
+      <a href="https://nowlents.github.io/campAIR-WFA/" target="_blank">Camp AIR Portal</a>
+      <a href="https://nowlents.github.io/campAIR-WFA/non-engineers" target="_blank">Non-Engineer Track</a>
+      <a href="https://nowlents.github.io/campAIR-WFA/engineers" target="_blank">Engineer Track</a>
+      <a href="https://forms.microsoft.com/r/cmPU5hzcYD" target="_blank">Submit Materials</a>
+    </div>
+  </footer>
+
+  <script>
+    function selectAudience(type, card) {
+      document.querySelectorAll('.audience-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      document.body.dataset.selectedAudience = type;
+      // Reveal Step 2 and connector
+      document.getElementById('connector-1').classList.add('visible');
+      document.getElementById('agenda-step').classList.remove('step-hidden');
+      // Smooth scroll to next step
+      setTimeout(() => {
+        document.getElementById('agenda-step').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+    function togglePanel(el) {
+      el.classList.toggle('expanded');
+    }
+    function scrollToPanel(id) {
+      const panel = document.getElementById(id);
+      if (panel) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => { if (!panel.classList.contains('expanded')) panel.classList.add('expanded'); }, 400);
+      }
+    }
+    function selectDelivery(el, type) {
+      document.querySelectorAll('.delivery-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+    function showAgendaOption(option, card) {
+      document.querySelectorAll('.agenda-choice__card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      document.getElementById('standard-agenda').classList.toggle('visible', option === 'standard');
+      document.getElementById('agenda-builder').classList.toggle('visible', option === 'builder');
+    }
+    // Drag-and-drop
+    let draggedHTML = '';
+    function dragStart(e, el) {
+      const badge = el.querySelector('.drag-item__badge');
+      const text = el.textContent.replace(badge ? badge.textContent : '', '').trim();
+      const badgeHTML = badge ? badge.outerHTML : '';
+      draggedHTML = badgeHTML + ' ' + text;
+      e.dataTransfer.setData('text/plain', draggedHTML);
+      e.dataTransfer.effectAllowed = 'copy';
+    }
+    function allowDrop(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drag-over');
+    }
+    function leaveDrop(e) {
+      e.currentTarget.classList.remove('drag-over');
+    }
+    function dropItem(e, slot) {
+      e.preventDefault();
+      slot.classList.remove('drag-over');
+      const data = e.dataTransfer.getData('text/plain');
+      if (!data) return;
+      const timeLabel = slot.classList.contains('filled') ? '' : slot.textContent;
+      slot.innerHTML = data + '<span class="slot-remove" onclick="removeSlot(event, this.parentElement, \'' + timeLabel.trim() + '\')">✕</span>';
+      slot.classList.add('filled');
+    }
+    function removeSlot(e, slot, timeLabel) {
+      e.stopPropagation();
+      slot.innerHTML = timeLabel || 'Drop here';
+      slot.classList.remove('filled');
+    }
+    // Intersection Observer for scroll-triggered animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('animate-in');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.model-card, .process, .detail-panel, .quick-links').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
